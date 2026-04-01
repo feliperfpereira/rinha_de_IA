@@ -11,6 +11,7 @@ import {
   scheduleAudioChunk,
   encodeWAV,
 } from './utils/audio'
+import { buildSystemPrompt } from './utils/document'
 
 // ---------------------------------------------------------------------------
 // Configurações padrão dos agentes
@@ -23,6 +24,8 @@ const DEFAULT_AGENT1: AgentConfig = {
     'Você é um filósofo apaixonado e curioso. Está em uma conversa de áudio com outro agente de IA. ' +
     'Responda de forma concisa (2 a 3 frases no máximo), faça perguntas instigantes e mantenha a conversa ' +
     'fluindo com ideias profundas e provocativas. Fale sempre em português brasileiro.',
+  documents: [],
+  freeText: '',
 }
 
 const DEFAULT_AGENT2: AgentConfig = {
@@ -32,6 +35,8 @@ const DEFAULT_AGENT2: AgentConfig = {
     'Você é um coach motivacional entusiasmado e prático. Está em uma conversa de áudio com outro agente de IA. ' +
     'Responda de forma concisa (2 a 3 frases no máximo), seja otimista e inspirador, conecte as ideias do outro ' +
     'agente com ações práticas do dia a dia. Fale sempre em português brasileiro.',
+  documents: [],
+  freeText: '',
 }
 
 // Tamanho do bloco ao enviar áudio para o próximo agente (em amostras a 16kHz)
@@ -223,7 +228,9 @@ export default function App() {
       function makeConfig(cfg: AgentConfig) {
         return {
           responseModalities: ['audio'] as any,
-          systemInstruction: { parts: [{ text: cfg.systemInstruction }] },
+          systemInstruction: {
+            parts: [{ text: buildSystemPrompt(cfg.systemInstruction, cfg.documents, cfg.freeText) }],
+          },
           speechConfig: {
             voiceConfig: { prebuiltVoiceConfig: { voiceName: cfg.voice } },
           },
