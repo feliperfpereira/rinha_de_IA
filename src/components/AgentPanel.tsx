@@ -22,9 +22,10 @@ interface Props {
   isSpeaking: boolean
   accentColor: 'blue' | 'orange'
   disabled: boolean
+  hideDocuments?: boolean
 }
 
-export function AgentPanel({ config, onChange, isSpeaking, accentColor, disabled }: Props) {
+export function AgentPanel({ config, onChange, isSpeaking, accentColor, disabled, hideDocuments = false }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const borderColor = accentColor === 'blue' ? 'border-blue-500/30' : 'border-orange-500/30'
@@ -126,7 +127,7 @@ export function AgentPanel({ config, onChange, isSpeaking, accentColor, disabled
       </div>
 
       {/* Base de Conhecimento */}
-      <div className="flex flex-col gap-2">
+      {!hideDocuments && <div className="flex flex-col gap-2">
         <label className="text-xs font-medium text-gray-500 uppercase tracking-wider">
           Base de Conhecimento
         </label>
@@ -211,7 +212,7 @@ export function AgentPanel({ config, onChange, isSpeaking, accentColor, disabled
             />
           </>
         )}
-      </div>
+      </div>}
     </div>
   )
 }

@@ -1,5 +1,7 @@
 export type VoiceName = 'Puck' | 'Charon' | 'Kore' | 'Fenrir' | 'Zephyr';
 
+export type AppMode = 'duelo' | 'podcast';
+
 export type ThinkingLevel = 'minimal' | 'low' | 'medium' | 'high';
 
 export interface UploadedDocument {
@@ -16,4 +18,10 @@ export interface AgentConfig {
   systemInstruction: string;
   documents: UploadedDocument[];
   freeText: string;
+}
+
+export interface TranscriptEntry {
+  agent: 1 | 2;
+  text: string;
+  timestamp: number;
 }
