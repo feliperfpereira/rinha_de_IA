@@ -20,6 +20,7 @@ import { buildSystemPrompt } from './utils/document'
 const DEFAULT_AGENT1: AgentConfig = {
   name: 'Agente Filósofo',
   voice: 'Puck',
+  thinkingLevel: 'minimal',
   systemInstruction:
     'Você é um filósofo apaixonado e curioso. Está em uma conversa de áudio com outro agente de IA. ' +
     'Responda de forma concisa (2 a 3 frases no máximo), faça perguntas instigantes e mantenha a conversa ' +
@@ -31,6 +32,7 @@ const DEFAULT_AGENT1: AgentConfig = {
 const DEFAULT_AGENT2: AgentConfig = {
   name: 'Agente Coach',
   voice: 'Zephyr',
+  thinkingLevel: 'minimal',
   systemInstruction:
     'Você é um coach motivacional entusiasmado e prático. Está em uma conversa de áudio com outro agente de IA. ' +
     'Responda de forma concisa (2 a 3 frases no máximo), seja otimista e inspirador, conecte as ideias do outro ' +
@@ -233,6 +235,9 @@ export default function App() {
           },
           speechConfig: {
             voiceConfig: { prebuiltVoiceConfig: { voiceName: cfg.voice } },
+          },
+          thinkingConfig: {
+            thinkingLevel: cfg.thinkingLevel,
           },
         }
       }

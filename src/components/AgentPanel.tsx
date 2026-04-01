@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { AgentConfig, UploadedDocument, VoiceName } from '../types'
+import { AgentConfig, ThinkingLevel, UploadedDocument, VoiceName } from '../types'
 import {
   estimateTokens,
   formatTokenCount,
@@ -8,6 +8,13 @@ import {
 } from '../utils/document'
 
 const VOICES: VoiceName[] = ['Puck', 'Charon', 'Kore', 'Fenrir', 'Zephyr']
+
+const THINKING_LEVELS: { value: ThinkingLevel; label: string }[] = [
+  { value: 'minimal', label: 'Minimal — mais rápido' },
+  { value: 'low', label: 'Low' },
+  { value: 'medium', label: 'Medium' },
+  { value: 'high', label: 'High — mais profundo' },
+]
 
 interface Props {
   config: AgentConfig
@@ -89,6 +96,19 @@ export function AgentPanel({ config, onChange, isSpeaking, accentColor, disabled
           className="bg-gray-800/80 text-gray-200 rounded-lg px-3 py-2.5 border border-gray-700 hover:border-gray-600 outline-none disabled:opacity-50 text-sm cursor-pointer"
         >
           {VOICES.map((v) => <option key={v} value={v}>{v}</option>)}
+        </select>
+      </div>
+
+      {/* Thinking Level */}
+      <div className="flex flex-col gap-1.5">
+        <label className="text-xs font-medium text-gray-500 uppercase tracking-wider">Thinking Level</label>
+        <select
+          value={config.thinkingLevel}
+          onChange={(e) => onChange({ ...config, thinkingLevel: e.target.value as ThinkingLevel })}
+          disabled={disabled}
+          className="bg-gray-800/80 text-gray-200 rounded-lg px-3 py-2.5 border border-gray-700 hover:border-gray-600 outline-none disabled:opacity-50 text-sm cursor-pointer"
+        >
+          {THINKING_LEVELS.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
         </select>
       </div>
 
